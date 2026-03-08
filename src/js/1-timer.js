@@ -76,7 +76,6 @@ function startTimer() {
         message: 'Time is up!',
       });
 
-      btnStart.disabled = false;
       return;
     }
 
