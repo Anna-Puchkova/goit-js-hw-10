@@ -43,8 +43,8 @@ function convertMs(ms) {
 
   const days = Math.floor(ms / day);
   const hours = Math.floor((ms % day) / hour);
-  const minutes = Math.floor(((ms % day) % hour) / minute);
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+  const minutes = Math.floor((ms % hour) / minute);
+  const seconds = Math.floor((ms % minute) / second);
 
   return { days, hours, minutes, seconds };
 }
@@ -64,26 +64,28 @@ function startTimer() {
 
   const timerId = setInterval(() => {
     const ms = userSelectedDate - new Date();
+
+    if (ms <= 0) {
+      clearInterval(timerId);
+      inputData.disabled = false;
+
+      newValue.forEach(el => (el.textContent = addLeadingZero(0)));
+
+      iziToast.success({
+        title: 'Info',
+        message: 'Time is up!',
+      });
+
+      btnStart.disabled = false;
+      return;
+    }
+
     const time = convertMs(ms);
 
     newValue[0].textContent = addLeadingZero(time.days);
     newValue[1].textContent = addLeadingZero(time.hours);
     newValue[2].textContent = addLeadingZero(time.minutes);
     newValue[3].textContent = addLeadingZero(time.seconds);
-
-    if (ms <= 0) {
-      clearInterval(timerId);
-      inputData.disabled = false;
-      newValue[0].textContent = addLeadingZero(0);
-      newValue[1].textContent = addLeadingZero(0);
-      newValue[2].textContent = addLeadingZero(0);
-      newValue[3].textContent = addLeadingZero(0);
-
-      iziToast.success({
-        title: 'Info',
-        message: 'Time is up!',
-      });
-    }
   }, 1000);
 }
 
