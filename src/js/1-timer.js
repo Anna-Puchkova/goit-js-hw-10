@@ -66,7 +66,7 @@ function startTimer() {
     const ms = userSelectedDate - new Date();
     const time = convertMs(ms);
 
-    newValue[0].textContent = time.days;
+    newValue[0].textContent = addLeadingZero(time.days);
     newValue[1].textContent = addLeadingZero(time.hours);
     newValue[2].textContent = addLeadingZero(time.minutes);
     newValue[3].textContent = addLeadingZero(time.seconds);
@@ -74,10 +74,10 @@ function startTimer() {
     if (ms <= 0) {
       clearInterval(timerId);
       inputData.disabled = false;
-      newValue[0].textContent = 0;
-      newValue[1].textContent = 0;
-      newValue[2].textContent = 0;
-      newValue[3].textContent = 0;
+      newValue[0].textContent = addLeadingZero(0);
+      newValue[1].textContent = addLeadingZero(0);
+      newValue[2].textContent = addLeadingZero(0);
+      newValue[3].textContent = addLeadingZero(0);
 
       iziToast.success({
         title: 'Info',
